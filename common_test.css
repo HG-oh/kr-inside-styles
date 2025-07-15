@@ -37,7 +37,10 @@
 
 /* -----------------------------------------------------------------
  * 2. 다크 모드 변수 재정의
+ * - 시스템 설정과 테마 토글 버튼 모두 지원
  * ----------------------------------------------------------------- */
+
+/* 시스템 설정에 따른 다크 모드 */
 @media (prefers-color-scheme: dark) {
   :root {
     --color-primary: #60a5fa;
@@ -48,15 +51,29 @@
     --color-bg-subtle: #1f2937;
     --color-border: #404040;
     --color-price: #ff6b6b;
-
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
   }
 }
 
+/* 테마 토글(data-theme) 또는 수동 클래스(.dark-mode)에 따른 다크 모드 */
+html[data-theme="dark"],
+.dark-mode {
+  --color-primary: #60a5fa;
+  --color-text-base: #f8fafc;
+  --color-text-muted: #9ca3af;
+  --color-text-accent: #bfdbfe;
+  --color-bg-base: #1e1e1e;
+  --color-bg-subtle: #1f2937;
+  --color-border: #404040;
+  --color-price: #ff6b6b;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+
 /* -----------------------------------------------------------------
  * 3. 통합 카드 기본 스타일 (기존 클래스명 유지)
- * - .faq-item, .card, .product-card 에 공통 스타일을 적용합니다.
  * ----------------------------------------------------------------- */
 .faq-item,
 .card,
