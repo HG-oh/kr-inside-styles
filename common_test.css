@@ -1,0 +1,346 @@
+/*
+ * =================================================================
+ * KR-INSIDE 통합 공통 CSS (common.css)
+ * - 최종 수정일: 2025-07-15
+ * - 목적: 모든 서브도메인에서 공통으로 사용하는 UI 요소 스타일 통합
+ * - 주요 특징:
+ * - CSS 변수를 사용한 중앙 집중식 색상 및 폰트 관리
+ * - 카드, 목차, FAQ 등 반복되는 UI 요소의 스타일 통합
+ * - 다크 모드 및 반응형 디자인 최적화
+ * =================================================================
+ */
+
+/* -----------------------------------------------------------------
+ * 1. CSS 변수 정의 (색상, 폰트, 공통 스타일)
+ * ----------------------------------------------------------------- */
+:root {
+  /* 색상 팔레트 */
+  --color-primary: #3b82f6;
+  --color-text-base: #1e293b;
+  --color-text-muted: #64748b;
+  --color-text-accent: #1e40af;
+  --color-bg-base: #ffffff;
+  --color-bg-subtle: #f8fafc;
+  --color-border: #e0e0e0;
+  --color-price: #dc3545;
+  --color-button-text: #ffffff;
+
+  /* 폰트 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* 카드 공통 스타일 */
+  --card-border-radius: 12px;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --card-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* -----------------------------------------------------------------
+ * 2. 다크 모드 변수 재정의
+ * ----------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #60a5fa;
+    --color-text-base: #f8fafc;
+    --color-text-muted: #9ca3af;
+    --color-text-accent: #bfdbfe;
+    --color-bg-base: #1e1e1e;
+    --color-bg-subtle: #1f2937;
+    --color-border: #404040;
+    --color-price: #ff6b6b;
+
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* -----------------------------------------------------------------
+ * 3. 통합 카드 기본 스타일 (기존 클래스명 유지)
+ * - .faq-item, .card, .product-card 에 공통 스타일을 적용합니다.
+ * ----------------------------------------------------------------- */
+.faq-item,
+.card,
+.product-card {
+  background-color: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  transition: var(--card-transition);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.faq-item:hover,
+.card:hover,
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* -----------------------------------------------------------------
+ * 4. 개별 UI 요소 스타일
+ * ----------------------------------------------------------------- */
+
+/** 4.1 FAQ 스타일 **/
+.faq-block {
+  margin: 32px 0;
+  font-family: var(--font-sans);
+}
+
+.faq-item {
+  padding: 18px 22px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.faq-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-primary), #8b5cf6);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.faq-item:hover::before,
+.faq-item[open]::before {
+  transform: scaleY(1);
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  color: var(--color-text-base);
+  transition: color 0.2s ease;
+}
+
+.faq-item summary:hover {
+  color: var(--color-primary);
+}
+
+.faq-item[open] summary {
+  color: var(--color-text-accent);
+  margin-bottom: 12px;
+}
+
+.faq-item .short-answer {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/** 4.2 기본 카드 스타일 (.card) **/
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background-color: var(--color-bg-subtle);
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.02);
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-content div {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-base);
+  line-height: 1.5;
+}
+
+/** 4.3 상품 카드 스타일 (.product-card) **/
+.product-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.product-card {
+  flex: 0 1 calc(33.333% - 25px);
+  min-width: 280px;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background-color: var(--color-bg-subtle);
+  opacity: 0.95;
+}
+.product-card:hover .product-image {
+  opacity: 1;
+}
+
+.product-card .product-details {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-name {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--color-text-base);
+  margin: 0 0 10px 0;
+  min-height: 2.5em;
+}
+
+.product-card .product-price {
+  font-size: 1.1em;
+  color: var(--color-price);
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.product-card .product-purchase-button {
+  display: inline-block;
+  width: 100%;
+  background-color: var(--color-primary);
+  color: var(--color-button-text);
+  padding: 12px 15px;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-top: auto;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.product-card .product-purchase-button:hover {
+  filter: brightness(1.1);
+}
+
+/** 4.4 목차 스타일 (.toc-container) **/
+.toc-container {
+  background-color: var(--color-bg-subtle);
+  border-left: 4px solid var(--color-primary);
+  padding: 15px 20px;
+  margin: 30px 0;
+}
+
+.toc-header {
+  font-size: 1.4em;
+  margin: 0 0 15px 0;
+  color: var(--color-primary);
+}
+
+.toc-list, .toc-h3-list {
+  list-style: none;
+  padding-left: 10px;
+  margin: 0;
+}
+
+.toc-h2-item a {
+  color: var(--color-text-base);
+  font-weight: 800;
+}
+
+.toc-h3-item a {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.toc-h2-item a, .toc-h3-item a {
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.toc-h2-item a:hover, .toc-h3-item a:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+/* -----------------------------------------------------------------
+ * 5. 반응형 디자인
+ * ----------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .card {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 992px) {
+  .product-card {
+    flex-basis: calc(50% - 25px);
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container,
+  .product-list-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .card,
+  .product-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
+/* -----------------------------------------------------------------
+ * 6. 접근성 및 기타
+ * ----------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .faq-item,
+  .card,
+  .product-card,
+  .toc-container,
+  .faq-item summary,
+  .card img {
+    transition: none;
+    animation: none;
+  }
+  .faq-item:hover,
+  .card:hover,
+  .product-card:hover {
+    transform: none;
+  }
+}
+
+.faq-item summary:focus,
+.toc-h2-item a:focus,
+.toc-h3-item a:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
