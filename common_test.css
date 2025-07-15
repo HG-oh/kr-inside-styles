@@ -99,6 +99,26 @@ html[data-theme="dark"],
  * 4. 개별 UI 요소 스타일
  * ----------------------------------------------------------------- */
 
+
+/* 공유 컨테이너 스타일 */
+.share-container {
+  display: flex;
+  justify-content: flex-start; /* 왼쪽에서 시작하도록 변경 */
+  align-items: center;     /* 수직 가운데 정렬 유지 */
+  border: 1px solid #d3d3d3; /* 밝은 회색 테두리 */
+  padding: 10px 15px;      /* 패딩 조정 (상하 10px, 좌우 15px) */
+  max-width: 250px;        /* 최대 가로 길이 */
+  margin: 0 auto;          /* 컨테이너를 수평 가운데 정렬 */
+  font-size: 18px;         /* 폰트 크기 조정 */
+  border-radius: 5px;
+  height: auto;            /* 높이를 자동으로 조정 */
+  line-height: normal;     /* 기본 라인 높이로 설정 */
+  box-sizing: border-box;  /* 패딩과 테두리를 너비와 높이에 포함 */
+  gap: 10px;               /* 요소 간 간격 추가 */
+}
+
+
+  
 /** 4.1 FAQ 스타일 **/
 .faq-block {
   margin: 32px 0;
