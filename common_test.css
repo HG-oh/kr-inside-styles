@@ -41,8 +41,10 @@
  * ----------------------------------------------------------------- */
 
 /* 시스템 설정에 따른 다크 모드 */
+/* ===== 자동 다크 모드 통합 스타일 ===== */
 @media (prefers-color-scheme: dark) {
   :root {
+    /* [1] common_test.css 다크모드 변수 */
     --color-primary: #60a5fa;
     --color-text-base: #f8fafc;
     --color-text-muted: #9ca3af;
@@ -53,6 +55,42 @@
     --color-price: #ff6b6b;
     --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
+
+    /* [2] Typify 테마 자체 다크모드 변수 */
+    --body-bg-color: #292027; /* 이전 테마의 body.darkmode.bg 값 */
+    --body-bg: #292027;       /* 이전 테마의 body.darkmode.bg 값 */
+    --outer-bg: #161D1F;
+    --title-color: #f4f4f4;
+    --meta-color: #dddddd;
+    --text-color: #bbbbbb;
+    --header-bg: #0F1618;
+    --header-color: #f4f4f4;
+    --header-text-color: #bbbbbb;
+    --main-nav-bg: #5477eb; /* 이전 테마의 main.color 값 */
+    --main-nav-color: #ffffff;
+    --main-nav-active-bg: rgba(255,255,255,0.1);
+    --main-nav-active-color: #ffffff;
+    --main-nav-hover-bg: rgba(255,255,255,0.1);
+    --main-nav-hover-color: #ffffff;
+    --submenu-bg: #0F1618;
+    --submenu-color: #f4f4f4;
+    --megamenu-bg: #0F1618;
+    --megamenu-color: #f4f4f4;
+    --widget-title-color: #f4f4f4;
+    --post-title-color: #f4f4f4;
+    --post-text-color: #bbbbbb;
+    --footer-bg: #0F1618;
+    --footer-color: #f4f4f4;
+    --footer-text-color: #bbbbbb;
+    --footerbar-bg: #0c1213;
+    --footerbar-color: #f4f4f4;
+    --border-color: rgba(155,155,155,0.08);
+    --bb-color: rgba(0,0,0,0.1);
+  }
+
+  /* 로고 이미지 반전 효과 */
+  .main-logo img {
+    filter: invert(1);
   }
 }
 
