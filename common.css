@@ -1,253 +1,1486 @@
-/*
- * =================================================================
- * KR-INSIDE 통합 공통 CSS (common.css)
- * - 작성일: 2025-07-15
- * - 목적: 모든 서브도메인에서 공통으로 사용하는 UI 요소 스타일 통합
- * - 주요 특징:
- * - CSS 변수를 사용한 중앙 집중식 색상 및 폰트 관리
- * - 카드, 목차, FAQ 등 반복되는 UI 요소의 스타일 통합
- * - 다크 모드 및 반응형 디자인 최적화
- * =================================================================
- */
 
-/* -----------------------------------------------------------------
- * 1. CSS 변수 정의 (색상 및 폰트 팔레트)
- * ----------------------------------------------------------------- */
-:root {
-  /* 기본 색상 */
-  --color-primary: #3b82f6; /* 메인 포인트 색상 */
-  --color-primary-dark: #60a5fa; /* 다크 모드 포인트 색상 */
-  --color-text-base: #1e293b; /* 기본 텍스트 */
-  --color-text-muted: #64748b; /* 보조 텍스트 */
-  --color-bg-base: #ffffff; /* 기본 배경 */
-  --color-bg-subtle: #f8fafc; /* 보조 배경 */
-  --color-border: #e0e0e0; /* 테두리 */
-
-  /* 폰트 */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-  /* 카드 스타일 */
-  --card-border-radius: 12px;
-  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+/* === FAQ 공통 스타일 ========================================================================================================================================================================================== */
+/* === FAQ 공통 스타일 === */
+.faq-block {
+  margin: 32px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-/* -----------------------------------------------------------------
- * 2. 다크 모드 변수 재정의
- * ----------------------------------------------------------------- */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: #60a5fa;
-    --color-text-base: #f8fafc;
-    --color-text-muted: #9ca3af;
-    --color-bg-base: #1e1e1e;
-    --color-bg-subtle: #1f2937;
-    --color-border: #404040;
-
-    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-    --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
-  }
-}
-
-/* -----------------------------------------------------------------
- * 3. 통합 카드 기본 스타일 (가장 핵심적인 부분)
- * - 기존 클래스에 공통 스타일을 한 번에 적용하여 호환성 확보
- * ----------------------------------------------------------------- */
-.faq-item,
-.card,
-.product-card,
-.toc-container {
-  background-color: var(--color-bg-base);
-  border: 1px solid var(--color-border);
-  border-radius: var(--card-border-radius);
-  box-shadow: var(--card-shadow);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-bottom: 20px;
-  overflow: hidden; /* 내부 요소가 모서리를 벗어나지 않도록 */
-}
-
-.faq-item:hover,
-.card:hover,
-.product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--card-shadow-hover);
-}
-
-/* -----------------------------------------------------------------
- * 4. 개별 UI 요소 스타일
- * - 각 요소의 고유한 디자인만 따로 정의합니다.
- * ----------------------------------------------------------------- */
-
-/** 4.1 개선된 카드 (기본) **/
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 24px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-.card {
-  width: 100%;
-  max-width: 350px;
-}
-
-.card img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  background-color: var(--color-bg-subtle);
-}
-
-.card-content {
-  padding: 20px;
-  text-align: center;
-}
-
-.card-content div {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--color-text-base);
-}
-
-/** 4.2 FAQ 스타일 **/
 .faq-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
   padding: 18px 22px;
-  background: linear-gradient(135deg, var(--color-bg-subtle) 0%, var(--color-bg-base) 100%);
+  margin: 16px 0;
+  background: linear-gradient(135deg, #fafafa 0%, #f8fafc 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.faq-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.faq-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.faq-item:hover::before {
+  transform: scaleY(1);
 }
 
 .faq-item summary {
   cursor: pointer;
   font-weight: 600;
-  color: var(--color-text-base);
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  padding-right: 24px;
+  color: #1e293b;
+  transition: color 0.2s ease;
 }
 
-.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '\25BC';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  font-size: 12px;
+  color: #64748b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 400;
+}
+
+.faq-item[open] summary::after {
+  transform: translateY(-50%) rotate(180deg);
+  color: #3b82f6;
+}
+
+.faq-item summary:hover {
+  color: #3b82f6;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+} /* Safari 마커 제거 */
 
 .faq-item .short-answer {
-  color: var(--color-text-muted);
+  color: #64748b;
+  font-weight: 400;
   font-size: 14px;
+  opacity: 0.9;
+  transition: color 0.2s ease;
 }
 
 .faq-item[open] {
-  border-color: var(--color-primary);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-color: #3b82f6;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-/** 4.3 쿠팡 상품 카드 스타일 **/
-.product-list-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
+.faq-item[open]::before {
+  transform: scaleY(1);
 }
 
-.product-card {
-  flex: 0 0 calc(33.333% - 25px);
-  max-width: 450px;
-  display: flex;
-  flex-direction: column;
+.faq-item[open] summary {
+  color: #1e40af;
+  margin-bottom: 12px;
 }
 
-.product-card .product-image {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+.faq-item[open] .short-answer {
+  color: #475569;
 }
 
-.product-card .product-details {
-  padding: 20px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+/* 애니메이션 효과 */
+.faq-item details > *:not(summary) {
+  animation: fadeInSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
-.product-card .product-name {
-  font-size: 1.15em;
-  font-weight: 600;
-  color: var(--color-text-base);
-  min-height: 2.5em;
+@keyframes fadeInSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.product-card .product-price {
-  font-size: 1.1em;
-  color: #dc3545; /* 가격은 강조를 위해 유지 */
-  font-weight: bold;
-  margin: 15px 0;
+/* 다크모드 스타일 */
+@media (prefers-color-scheme: dark) {
+  .faq-item {
+    border-color: #374151;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  
+  .faq-item::before {
+    background: linear-gradient(to bottom, #60a5fa, #a78bfa);
+  }
+  
+  .faq-item:hover {
+    border-color: #4b5563;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+  
+  .faq-item summary {
+    color: #f8fafc;
+  }
+  
+  .faq-item summary::after {
+    color: #9ca3af;
+  }
+  
+  .faq-item[open] summary::after {
+    color: #60a5fa;
+  }
+  
+  .faq-item summary:hover {
+    color: #60a5fa;
+  }
+  
+  .faq-item .short-answer {
+    color: #9ca3af;
+  }
+  
+  .faq-item[open] {
+    background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    border-color: #60a5fa;
+    box-shadow: 0 8px 25px rgba(96, 165, 250, 0.2), 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  .faq-item[open] summary {
+    color: #bfdbfe;
+  }
+  
+  .faq-item[open] .short-answer {
+    color: #cbd5e1;
+  }
 }
 
-.product-card .product-purchase-button {
-    display: inline-block;
-    width: 100%;
-    background-color: var(--color-primary);
-    color: white;
-    padding: 12px 15px;
-    text-align: center;
-    border-radius: 5px;
-    font-weight: bold;
-    margin-top: auto;
-    border: none;
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .faq-block {
+    margin: 24px 0;
+    font-size: 15px;
+  }
+  
+  .faq-item {
+    padding: 16px 18px;
+    margin: 12px 0;
+    border-radius: 10px;
+  }
+  
+  .faq-item summary {
+    gap: 4px;
+    padding-right: 20px;
+  }
+  
+  .faq-item summary::after {
+    font-size: 11px;
+  }
+}
+
+/* 접근성 향상 */
+@media (prefers-reduced-motion: reduce) {
+  .faq-item,
+  .faq-item summary,
+  .faq-item summary::after,
+  .faq-item .short-answer {
+    transition: none;
+  }
+  
+  .faq-item:hover {
+    transform: none;
+  }
+  
+  .faq-item details > *:not(summary) {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 포커스 상태 */
+.faq-item summary:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @media (prefers-color-scheme: dark) {
-    .product-card .product-price { color: #ff6b6b; }
+  .faq-item summary:focus {
+    outline-color: #60a5fa;
+  }
 }
 
 
-/** 4.4 목차(TOC) 스타일 **/
+
+
+
+
+/*
+/*
+  === 개선된 카드 스타일 CSS ==================================================================================================================================================================
+  - 가운데 정렬 최적화
+  - 반응형 이미지 크기 조절
+  - 테두리 바깥 마진 추가
+  - 다크모드 시인성 개선
+*/
+
+/* ===== 기본 라이트 모드 스타일 ===== */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;  /* 완전한 가운데 정렬 */
+    gap: 24px;                /* 카드 간격 증가 */
+    margin: 30px auto;        /* 상하 마진과 가운데 정렬 */
+    padding: 0 20px;          /* 좌우 패딩 추가 */
+    max-width: 1200px;        /* 컨테이너 최대 너비 설정 */
+}
+
+.card {
+    width: 100%;
+    max-width: 350px;
+    min-width: 280px;         /* 최소 너비 설정 */
+    margin: 0 auto 20px auto; /* 바깥 마진 추가 및 가운데 정렬 */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;      /* 더 둥근 모서리 */
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: #ffffff;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: #d0d0d0;
+}
+
+.card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    background-color: #f8f9fa; /* 이미지 로딩 중 배경색 */
+}
+
+.card:hover img {
+    transform: scale(1.02);   /* 호버시 이미지 살짝 확대 */
+}
+
+.card-content {
+    padding: 20px;
+    text-align: center;
+    background-color: inherit;
+}
+
+.card-content div {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+/* ===== 다크모드 스타일 (시인성 개선) ===== */
+@media (prefers-color-scheme: dark) {
+    .card {
+        background-color: #1e1e1e;      /* 더 부드러운 다크 배경 */
+        border: 1px solid #404040;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        border-color: #606060;          /* 더 밝은 호버 테두리 */
+        background-color: #252525;      /* 호버시 배경 약간 밝게 */
+    }
+    
+    .card-content {
+        background-color: inherit;
+    }
+    
+    .card-content div {
+        color: #e0e0e0;                 /* 더 밝은 텍스트 */
+        font-weight: 500;
+    }
+    
+    .card img {
+        opacity: 0.92;
+        background-color: #2a2a2a;      /* 다크모드 이미지 배경 */
+    }
+    
+    .card:hover img {
+        opacity: 1;
+    }
+}
+
+/* ===== 반응형 디자인 ===== */
+
+/* 태블릿 (768px ~ 1024px) */
+@media (max-width: 1024px) {
+    .card-container {
+        gap: 20px;
+        padding: 0 16px;
+    }
+    
+    .card {
+        max-width: 320px;
+    }
+}
+
+/* 모바일 (768px 이하) */
+@media (max-width: 768px) {
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 0 12px;
+    }
+    
+    .card {
+        max-width: 100%;
+        min-width: unset;
+        width: calc(100% - 24px);       /* 좌우 여백 확보 */
+        margin: 0 auto 16px auto;
+    }
+    
+    .card-content {
+        padding: 16px;
+    }
+    
+    .card-content div {
+        font-size: 0.95rem;
+    }
+}
+
+/* 매우 작은 모바일 (480px 이하) */
+@media (max-width: 480px) {
+    .card-container {
+        padding: 0 8px;
+        gap: 12px;
+    }
+    
+    .card {
+        width: calc(100% - 16px);
+        margin: 0 auto 12px auto;
+    }
+    
+    .card-content {
+        padding: 14px;
+    }
+    
+    .card-content div {
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== 큰 화면 최적화 (1200px 이상) ===== */
+@media (min-width: 1200px) {
+    .card-container {
+        gap: 30px;
+    }
+    
+    .card {
+        max-width: 380px;
+    }
+}
+
+
+
+
+
+
+/* 쿠팡 상품목록 카드 이미지 coupang CSS (product- 접두사 적용) ========================================================================================================================================================*/
+
+/* 기본 컨테이너 스타일 - 전체 너비를 사용하되 내용물에 여백 제공 */
+#post-content {
+  width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  border-radius: 8px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- 상단 목차 스타일 --- */
+.product-toc {
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #e9ecef;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.product-toc h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+  color: #343a40;
+  transition: color 0.3s ease;
+}
+
+.product-toc .product-toc-list {
+  margin-bottom: 0;
+}
+
+.product-toc .product-toc-main-item > a {
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.product-toc .product-toc-sublist {
+  font-size: 0.95em;
+  color: #495057;
+  margin-top: 8px;
+  transition: color 0.3s ease;
+}
+
+.product-toc .product-toc-product-item {
+  margin-bottom: 5px;
+}
+
+/* --- 구분선 스타일 --- */
+hr.product-section-divider {
+  border: 0;
+  height: 1px;
+  background-color: #dee2e6;
+  margin: 40px 0;
+  transition: background-color 0.3s ease;
+}
+
+/* --- 섹션 제목 스타일 --- */
+h2.product-section-title {
+  color: #212529;
+  font-size: 1.8em;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  transition: color 0.3s ease;
+}
+
+h2.product-section-title a {
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* --- Flexbox 카드 레이아웃 컨테이너 --- */
+/* 카드들을 담는 컨테이너로, flexbox로 배치하고 중앙 정렬 */
+.product-list-container {
+  display: flex;
+  flex-wrap: wrap; /* 여러 줄에 걸쳐 표시 */
+  gap: 25px; /* 카드 사이 간격 */
+  justify-content: center; /* 가로축 중앙 정렬 */
+  width: 100%; /* 전체 너비 사용 */
+}
+
+/* --- 카드 기본 스타일 --- */
+.product-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  background-color: #fff;
+  /* 큰 화면에서 3열 레이아웃, 더 큰 카드 크기 */
+  flex: 0 0 calc(33.333% - 25px);
+  min-width: 280px; /* 최소 너비 설정 */
+  max-width: 450px; /* 최대 너비 증가 */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 호버 효과 - 카드를 살짝 위로 들어올림 */
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+/* 이미지 링크 컨테이너 */
+.product-card .product-image-link {
+  display: block;
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+}
+
+/* 상품 이미지 스타일 */
+.product-card .product-image {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover; /* 이미지 비율 유지하며 영역 채움 */
+  transition: opacity 0.3s ease;
+}
+
+/* 상품 상세 정보 영역 */
+.product-card .product-details {
+  padding: 20px;
+  text-align: left;
+  flex-grow: 1; /* 남은 공간 채우기 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 상품명 스타일 */
+.product-card .product-name {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #343a40;
+  margin-top: 0;
+  margin-bottom: 10px;
+  min-height: 2.5em; /* 2줄 정도 높이 확보 */
+  line-height: 1.3;
+  transition: color 0.3s ease;
+}
+
+/* 가격 스타일 */
+.product-card .product-price {
+  font-size: 1.1em;
+  color: #dc3545; /* 빨간색 가격 */
+  font-weight: bold;
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+/* 구매 버튼 스타일 */
+.product-card .product-button.product-purchase-button {
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 15px;
+  text-align: center;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  border: none;
+  cursor: pointer;
+  margin-top: auto; /* 카드 하단에 배치 */
+}
+
+/* 구매 버튼 호버 효과 */
+.product-card .product-button.product-purchase-button:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+}
+
+/* ===== 다크모드 스타일 ===== */
+@media (prefers-color-scheme: dark) {
+  /* 기본 컨테이너 */
+  #post-content {
+    background-color: #1a1a1a;
+    box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    color: #e0e0e0;
+  }
+  
+  /* 상단 목차 */
+  .product-toc {
+    background-color: #2d2d2d;
+  }
+  
+  .product-toc h2 {
+    color: #f0f0f0;
+  }
+  
+  .product-toc .product-toc-main-item > a {
+    color: #e0e0e0;
+  }
+  
+  .product-toc .product-toc-sublist {
+    color: #b0b0b0;
+  }
+  
+  /* 구분선 */
+  hr.product-section-divider {
+    background-color: #404040;
+  }
+  
+  /* 섹션 제목 */
+  h2.product-section-title {
+    color: #f0f0f0;
+  }
+  
+  h2.product-section-title a {
+    color: #f0f0f0;
+  }
+  
+  /* 카드 스타일 */
+  .product-card {
+    border: 1px solid #404040;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    background-color: #2d2d2d;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    border-color: #606060;
+  }
+  
+  /* 이미지 링크 컨테이너 */
+  .product-card .product-image-link {
+    background-color: #3a3a3a;
+  }
+  
+  /* 이미지 */
+  .product-card .product-image {
+    opacity: 0.9;
+  }
+  
+  .product-card:hover .product-image {
+    opacity: 1;
+  }
+  
+  /* 상품명 */
+  .product-card .product-name {
+    color: #e0e0e0;
+  }
+  
+  /* 가격 */
+  .product-card .product-price {
+    color: #ff6b6b; /* 다크모드용 더 밝은 빨간색 */
+  }
+  
+  /* 구매 버튼 */
+  .product-card .product-button.product-purchase-button {
+    background-color: #0d6efd;
+  }
+  
+  .product-card .product-button.product-purchase-button:hover {
+    background-color: #0b5ed7;
+  }
+}
+
+/* ===== 수동 다크모드 클래스 ===== */
+/* JavaScript로 다크모드를 수동 제어하고 싶을 때 사용 */
+.dark-mode #post-content {
+  background-color: #1a1a1a;
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
+  color: #e0e0e0;
+}
+
+.dark-mode .product-toc {
+  background-color: #2d2d2d;
+}
+
+.dark-mode .product-toc h2 {
+  color: #f0f0f0;
+}
+
+.dark-mode .product-toc .product-toc-main-item > a {
+  color: #e0e0e0;
+}
+
+.dark-mode .product-toc .product-toc-sublist {
+  color: #b0b0b0;
+}
+
+.dark-mode hr.product-section-divider {
+  background-color: #404040;
+}
+
+.dark-mode h2.product-section-title {
+  color: #f0f0f0;
+}
+
+.dark-mode h2.product-section-title a {
+  color: #f0f0f0;
+}
+
+.dark-mode .product-card {
+  border: 1px solid #404040;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  background-color: #2d2d2d;
+}
+
+.dark-mode .product-card:hover {
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+  border-color: #606060;
+}
+
+.dark-mode .product-card .product-image-link {
+  background-color: #3a3a3a;
+}
+
+.dark-mode .product-card .product-image {
+  opacity: 0.9;
+}
+
+.dark-mode .product-card:hover .product-image {
+  opacity: 1;
+}
+
+.dark-mode .product-card .product-name {
+  color: #e0e0e0;
+}
+
+.dark-mode .product-card .product-price {
+  color: #ff6b6b;
+}
+
+.dark-mode .product-card .product-button.product-purchase-button {
+  background-color: #0d6efd;
+}
+
+.dark-mode .product-card .product-button.product-purchase-button:hover {
+  background-color: #0b5ed7;
+}
+
+/* ===== 다크모드 전환 버튼 스타일 (옵션) ===== */
+.product-dark-mode-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  color: #495057;
+}
+
+.product-dark-mode-toggle:hover {
+  background-color: #e9ecef;
+  transform: scale(1.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-dark-mode-toggle {
+    background-color: #343a40;
+    border-color: #495057;
+    color: #f8f9fa;
+  }
+  
+  .product-dark-mode-toggle:hover {
+    background-color: #495057;
+  }
+}
+
+.dark-mode .product-dark-mode-toggle {
+  background-color: #343a40;
+  border-color: #495057;
+  color: #f8f9fa;
+}
+
+.dark-mode .product-dark-mode-toggle:hover {
+  background-color: #495057;
+}
+
+/* --- 반응형 디자인 --- */
+/* 초대형 화면 (1400px 이상): 3열 레이아웃, 큰 카드 */
+@media (min-width: 1400px) {
+  .product-card {
+    flex: 0 0 calc(33.333% - 30px);
+    max-width: 500px; /* 더 큰 최대 너비 */
+  }
+  
+  .product-list-container {
+    gap: 30px; /* 더 넓은 간격 */
+  }
+  
+  .product-card .product-image {
+    height: 250px; /* 더 큰 이미지 */
+  }
+}
+
+/* 대형 화면 (1200px-1400px): 3열 레이아웃 */
+@media (max-width: 1400px) {
+  .product-card {
+    flex: 0 0 calc(33.333% - 25px);
+    max-width: 450px;
+  }
+}
+
+/* 중형 화면 (992px-1200px): 3열 레이아웃, 약간 작은 카드 */
+@media (max-width: 1200px) {
+  .product-card {
+    flex: 0 0 calc(33.333% - 25px);
+    max-width: 380px;
+  }
+}
+
+/* 태블릿 (768px-992px): 2열 레이아웃 */
+@media (max-width: 992px) {
+  .product-card {
+    flex: 0 0 calc(50% - 25px);
+    max-width: 400px;
+  }
+}
+
+/* 작은 태블릿 (576px-768px): 2열 레이아웃, 간격 축소 */
+@media (max-width: 768px) {
+  .product-card {
+    flex: 0 0 calc(50% - 20px);
+    max-width: 350px;
+  }
+  
+  .product-list-container {
+    gap: 20px; /* 간격 축소 */
+  }
+  
+  #post-content {
+    padding: 15px; /* 컨테이너 패딩 축소 */
+  }
+  
+  h2.product-section-title {
+    font-size: 1.6em; /* 제목 크기 축소 */
+  }
+  
+  /* 모바일에서 다크모드 토글 버튼 크기 조정 */
+  .product-dark-mode-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+}
+
+/* 모바일 (576px 이하): 1열 레이아웃 */
+@media (max-width: 576px) {
+  .product-card {
+    flex: 0 0 100%;
+    max-width: 450px;
+  }
+  
+  .product-toc {
+    text-align: left;
+  }
+  
+  .product-toc .product-toc-sublist {
+    padding-left: 1em;
+  }
+  
+  .product-card .product-image {
+    height: 200px;
+  }
+}
+
+
+
+/* 목차 영역 스타일========================================================================================================================================================================================== */
 .toc-container {
-    background-color: var(--color-bg-subtle);
-    border-left: 4px solid var(--color-primary);
+    background-color: #f9f9f9;
+    border-left: 4px solid #4285f4;
     padding: 15px 20px;
     margin: 30px 0;
+    border-radius: 0 4px 4px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .toc-header {
     font-size: 1.4em;
-    color: var(--color-primary);
-    margin: 0 0 15px 0;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #4285f4;
+    transition: color 0.3s ease;
 }
 
-.toc-list, .toc-h3-list {
+.toc-list {
     list-style: none;
     padding-left: 10px;
+    margin: 0;
 }
 
-.toc-h2-item a, .toc-h3-item a {
-    text-decoration: none;
-    color: var(--color-text-muted);
-    font-weight: 500;
+.toc-h2-item {
+    font-size: 1.1em;
+    margin-bottom: 10px;
 }
 
 .toc-h2-item a {
+    color: #555;
+    text-decoration: none;
     font-weight: 800;
-    color: var(--color-text-base);
+    transition: color 0.3s ease;
 }
 
-.toc-h2-item a:hover, .toc-h3-item a:hover {
-    color: var(--color-primary);
+.toc-h2-item a:hover {
+    color: #4285f4;
     text-decoration: underline;
 }
 
-/* -----------------------------------------------------------------
- * 5. 반응형 디자인
- * ----------------------------------------------------------------- */
-@media (max-width: 992px) {
-  .product-card {
-    flex-basis: calc(50% - 25px);
-  }
+.toc-h3-list {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 5px;
 }
 
-@media (max-width: 768px) {
-  .card-container, .product-list-container {
-    gap: 16px;
-    padding: 0 12px;
-  }
-  .card, .product-card {
-    flex-basis: 100%;
-    max-width: 100%;
-    width: 100%;
-  }
+.toc-h3-item {
+    margin-bottom: 8px;
+    font-size: 0.9em;
 }
+
+.toc-h3-item a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.toc-h3-item a:hover {
+    color: #4285f4;
+    text-decoration: underline;
+}
+
+.toc-h3-item::before {
+    content: "- ";
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+/* ===== 다크모드 스타일 ===== */
+@media (prefers-color-scheme: dark) {
+    .toc-container {
+        background-color: #2d2d2d;
+        border-left: 4px solid #5aa3f0; /* 다크모드용 더 밝은 파란색 */
+    }
+    
+    .toc-header {
+        color: #5aa3f0; /* 다크모드용 더 밝은 파란색 */
+    }
+    
+    .toc-h2-item a {
+        color: #d0d0d0; /* 다크모드용 밝은 회색 */
+    }
+    
+    .toc-h2-item a:hover {
+        color: #5aa3f0; /* 호버시 밝은 파란색 */
+    }
+    
+    .toc-h3-item a {
+        color: #b8b8b8; /* 다크모드용 중간 밝기 회색 */
+    }
+    
+    .toc-h3-item a:hover {
+        color: #5aa3f0; /* 호버시 밝은 파란색 */
+    }
+    
+    .toc-h3-item::before {
+        color: #888; /* 다시점 색상 */
+    }
+}
+
+/* ===== 수동 다크모드 클래스 ===== */
+/* JavaScript로 다크모드를 수동 제어하고 싶을 때 사용 */
+.dark-mode .toc-container {
+    background-color: #2d2d2d;
+    border-left: 4px solid #5aa3f0;
+}
+
+.dark-mode .toc-header {
+    color: #5aa3f0;
+}
+
+.dark-mode .toc-h2-item a {
+    color: #d0d0d0;
+}
+
+.dark-mode .toc-h2-item a:hover {
+    color: #5aa3f0;
+}
+
+.dark-mode .toc-h3-item a {
+    color: #b8b8b8;
+}
+
+.dark-mode .toc-h3-item a:hover {
+    color: #5aa3f0;
+}
+
+.dark-mode .toc-h3-item::before {
+    color: #888;
+}
+
+/* ===== 다크모드 토글 버튼 (목차용) ===== */
+.toc-dark-mode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    padding: 6px 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.toc-container {
+    position: relative; /* 토글 버튼 위치 조정용 */
+}
+
+.toc-dark-mode-toggle:hover {
+    background-color: rgba(240, 240, 240, 0.9);
+    transform: scale(1.05);
+}
+
+@media (prefers-color-scheme: dark) {
+    .toc-dark-mode-toggle {
+        background-color: rgba(45, 45, 45, 0.8);
+        border-color: #555;
+        color: #f0f0f0;
+    }
+    
+    .toc-dark-mode-toggle:hover {
+        background-color: rgba(60, 60, 60, 0.9);
+    }
+}
+
+.dark-mode .toc-dark-mode-toggle {
+    background-color: rgba(45, 45, 45, 0.8);
+    border-color: #555;
+    color: #f0f0f0;
+}
+
+.dark-mode .toc-dark-mode-toggle:hover {
+    background-color: rgba(60, 60, 60, 0.9);
+}
+
+/* ===== 반응형 디자인 ===== */
+@media (max-width: 768px) {
+    .toc-container {
+        padding: 12px 15px;
+        margin: 20px 0;
+    }
+    
+    .toc-header {
+        font-size: 1.2em;
+        margin-bottom: 12px;
+    }
+    
+    .toc-h3-list {
+        padding-left: 15px;
+    }
+    
+    .toc-dark-mode-toggle {
+        top: 8px;
+        right: 10px;
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .toc-container {
+        padding: 10px 12px;
+        margin: 15px 0;
+    }
+    
+    .toc-header {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+    
+    .toc-h2-item {
+        margin-bottom: 8px;
+    }
+    
+    .toc-h3-item {
+        margin-bottom: 6px;
+        font-size: 0.9em;
+    }
+    
+    .toc-h3-list {
+        padding-left: 12px;
+    }
+    
+    .toc-dark-mode-toggle {
+        display: none; /* 매우 작은 화면에서는 토글 버튼 숨김 */
+    }
+}
+
+/* ===== 접근성 개선 ===== */
+/* 포커스 상태 스타일 */
+.toc-h2-item a:focus,
+.toc-h3-item a:focus {
+    outline: 2px solid #4285f4;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .toc-h2-item a:focus,
+    .toc-h3-item a:focus {
+        outline-color: #5aa3f0;
+    }
+}
+
+.dark-mode .toc-h2-item a:focus,
+.dark-mode .toc-h3-item a:focus {
+    outline-color: #5aa3f0;
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+    .toc-container {
+        border-left-width: 6px;
+    }
+    
+    .toc-h2-item a,
+    .toc-h3-item a {
+        font-weight: 600;
+    }
+}
+
+
+
+
+/* =================================================================
+   시스템 다크모드 자동 감지 및 테마 적용
+   ================================================================= */
+
+@media (prefers-color-scheme: dark) {
+  
+  /* -----------------------------------------------------------------
+     CSS 변수 정의 (다크모드 색상 팔레트)
+     ----------------------------------------------------------------- */
+  :root {
+    /* 기본 배경 및 텍스트 색상 */
+    --body-bg-color: $(body.darkmode.bg);
+    --body-bg: $(body.darkmode.bg);
+    --outer-bg: #161D1F;
+    --text-color: #bbbbbb;
+    
+    /* 메인 색상 */
+    --main-color: $(main.color);
+    
+    /* 제목 및 강조 색상 */
+    --title-color: #f4f4f4;
+    --title-hover-color: $(main.color);
+    --meta-color: #dddddd;
+    
+    /* 태그 색상 */
+    --tag-bg: $(main.color);
+    --tag-color: #ffffff;
+    
+    /* 헤더 영역 색상 */
+    --header-bg: #0F1618;
+    --header-color: #f4f4f4;
+    --header-hover-color: $(main.color);
+    --header-text-color: #bbbbbb;
+    
+    /* 메인 네비게이션 색상 */
+    --main-nav-bg: #1e4c8a; 
+    --main-nav-color: #ffffff;
+    --main-nav-active-bg: rgba(255, 255, 255, 0.1);
+    --main-nav-active-color: #ffffff;
+    --main-nav-hover-bg: rgba(255, 255, 255, 0.1);
+    --main-nav-hover-color: #ffffff;
+    
+    /* 서브메뉴 색상 */
+    --submenu-bg: #0F1618;
+    --submenu-color: #f4f4f4;
+    --submenu-hover-color: $(main.color);
+    
+    /* 메가메뉴 색상 */
+    --megamenu-bg: #0F1618;
+    --megamenu-color: #f4f4f4;
+    --megamenu-hover-color: $(main.color);
+    
+    /* 모바일 메뉴 색상 */
+    --mobilemenu-bg: #161D1F;
+    --mobilemenu-color: #f4f4f4;
+    --mobilemenu-hover-color: $(main.color);
+    
+    /* 위젯 색상 */
+    --widget-title-color: #f4f4f4;
+    --widget-title-dot: $(main.color);
+    
+    /* 포스트 영역 색상 */
+    --post-bg-color: #2c2f33;
+    --post-text-color: #bbbbbb;
+    --post-title-color: #f4f4f4;
+
+    /* 푸터 영역 색상 */
+    --footer-bg: #0F1618;
+    --footer-color: #f4f4f4;
+    --footer-hover-color: $(main.color);
+    --footer-text-color: #bbbbbb;
+    
+    /* 푸터바 색상 */
+    --footerbar-bg: #0c1213;
+    --footerbar-color: #f4f4f4;
+    --footerbar-hover-color: $(main.color);
+    
+    /* 쿠키 배너 색상 */
+    --cookie-bg: #0F1618;
+    --cookie-color: #bbbbbb;
+    
+    /* 버튼 색상 */
+    --button-bg: $(main.color);
+    --button-color: #ffffff;
+    --button-hover-bg: $(button.hover.bg);
+    --button-hover-color: $(button.hover.color);
+    
+    /* 경계선 색상 */
+    --border-color: rgba(155, 155, 155, 0.08);
+    --bb-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* -----------------------------------------------------------------
+     기본 요소 스타일링
+     ----------------------------------------------------------------- */
+  
+  /* 본문 배경 및 텍스트 색상 */
+  body {
+    background-color: var(--body-bg) !important;
+    color: var(--text-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     헤더 영역 스타일링
+     ----------------------------------------------------------------- */
+  
+  header,
+  .header {
+    background-color: var(--header-bg) !important;
+    color: var(--header-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     네비게이션 영역 스타일링
+     ----------------------------------------------------------------- */
+  
+  /* 메인 네비게이션 */
+  nav,
+  .main-nav {
+    background-color: var(--main-nav-bg) !important;
+    color: var(--main-nav-color) !important;
+  }
+  
+  /* 네비게이션 링크 */
+  nav a,
+  .main-nav a {
+    color: var(--main-nav-color) !important;
+  }
+  
+  /* 네비게이션 호버 효과 */
+  nav a:hover,
+  .main-nav a:hover {
+    background-color: var(--main-nav-hover-bg) !important;
+    color: var(--main-nav-hover-color) !important;
+  }
+  
+  /* 활성 네비게이션 항목 */
+  .main-nav .active {
+    background-color: var(--main-nav-active-bg) !important;
+    color: var(--main-nav-active-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     사이드바 영역 스타일링
+     ----------------------------------------------------------------- */
+  
+  .sidebar,
+  #sidebar {
+    background-color: var(--outer-bg) !important;
+    color: var(--text-color) !important;
+  }
+  
+  /* 사이드바 링크 */
+  .sidebar a,
+  #sidebar a {
+    color: var(--link-color) !important;
+  }
+  
+  /* 위젯 제목 */
+  .sidebar .widget-title,
+  #sidebar .widget-title {
+    color: var(--widget-title-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     포스트 콘텐츠 영역 스타일링
+     ----------------------------------------------------------------- */
+  
+  /* 포스트 컨테이너 */
+  #post-content {
+    background-color: var(--post-bg-color) !important;
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 제목 (h2) */
+  #post-content h2 {
+    color: var(--post-text-color) !important;
+  }
+
+  /* 단락 (p) */
+  #post-content p {
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 링크 (a) */
+  #post-content a {
+    color: var(--link-color) !important;
+  }
+  
+  #post-content a:hover {
+    opacity: 0.8;
+  }
+  
+  /* 인용문 (blockquote) */
+  #post-content blockquote {
+    background-color: #3a3f42 !important;
+    border-left: 4px solid #5a5f63 !important;
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 코드 블록 (pre, code) */
+  #post-content pre,
+  #post-content code {
+    background-color: #1e2326 !important;
+    color: #e0e0e0 !important;
+  }
+  
+  /* 표 (table) */
+  #post-content table {
+    background-color: #2c2f33 !important;
+    color: var(--post-text-color) !important;
+    border-color: #444848 !important;
+  }
+  
+  /* 표 헤더 (th) */
+  #post-content th {
+    background-color: #3a3f42 !important;
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 표 셀 (td) */
+  #post-content td {
+    background-color: #2c2f33 !important;
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 리스트 (ul, ol, li) */
+  #post-content ul,
+  #post-content ol,
+  #post-content li {
+    color: var(--post-text-color) !important;
+  }
+  
+  /* 이미지 필터 (선택사항 - 필요시 주석 해제)
+  #post-content img {
+    filter: brightness(0.9) contrast(1.1) !important;
+  }
+  */
+
+  /* -----------------------------------------------------------------
+     푸터 영역 스타일링
+     ----------------------------------------------------------------- */
+  
+  /* 메인 푸터 */
+  footer,
+  .footer {
+    background-color: var(--footer-bg) !important;
+    color: var(--footer-color) !important;
+  }
+  
+  /* 푸터 링크 */
+  footer a,
+  .footer a {
+    color: var(--footer-color) !important;
+  }
+  
+  footer a:hover,
+  .footer a:hover {
+    color: var(--footer-hover-color) !important;
+  }
+  
+  /* 푸터바 */
+  .footerbar,
+  #footerbar {
+    background-color: var(--footerbar-bg) !important;
+    color: var(--footerbar-color) !important;
+  }
+  
+  .footerbar a,
+  #footerbar a {
+    color: var(--footerbar-color) !important;
+  }
+  
+  .footerbar a:hover,
+  #footerbar a:hover {
+    color: var(--footerbar-hover-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     기타 UI 요소 스타일링
+     ----------------------------------------------------------------- */
+  
+  /* 쿠키 배너 */
+  .cookie-banner,
+  #cookie-banner {
+    background-color: var(--cookie-bg) !important;
+    color: var(--cookie-color) !important;
+  }
+  
+  /* 버튼 */
+  button,
+  .button,
+  .btn {
+    background-color: var(--button-bg) !important;
+    color: var(--button-color) !important;
+  }
+  
+  button:hover,
+  .button:hover,
+  .btn:hover {
+    background-color: var(--button-hover-bg) !important;
+    color: var(--button-hover-color) !important;
+  }
+  
+  /* 경계선 및 구분선 */
+  hr,
+  .divider {
+    border-color: var(--border-color) !important;
+  }
+  
+  /* 박스 및 카드 요소 */
+  .box,
+  .card {
+    background-color: var(--outer-bg) !important;
+    border-color: var(--bb-color) !important;
+  }
+
+  /* -----------------------------------------------------------------
+     추가 커스터마이징 영역
+     (필요에 따라 새로운 스타일을 여기에 추가하세요)
+     ----------------------------------------------------------------- */
+  
+}
+
+/* =================================================================
+   다크모드 CSS 끝
+   ================================================================= */
+
+
+
