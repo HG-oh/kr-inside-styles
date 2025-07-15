@@ -1,0 +1,253 @@
+/*
+ * =================================================================
+ * KR-INSIDE 통합 공통 CSS (common.css)
+ * - 작성일: 2025-07-15
+ * - 목적: 모든 서브도메인에서 공통으로 사용하는 UI 요소 스타일 통합
+ * - 주요 특징:
+ * - CSS 변수를 사용한 중앙 집중식 색상 및 폰트 관리
+ * - 카드, 목차, FAQ 등 반복되는 UI 요소의 스타일 통합
+ * - 다크 모드 및 반응형 디자인 최적화
+ * =================================================================
+ */
+
+/* -----------------------------------------------------------------
+ * 1. CSS 변수 정의 (색상 및 폰트 팔레트)
+ * ----------------------------------------------------------------- */
+:root {
+  /* 기본 색상 */
+  --color-primary: #3b82f6; /* 메인 포인트 색상 */
+  --color-primary-dark: #60a5fa; /* 다크 모드 포인트 색상 */
+  --color-text-base: #1e293b; /* 기본 텍스트 */
+  --color-text-muted: #64748b; /* 보조 텍스트 */
+  --color-bg-base: #ffffff; /* 기본 배경 */
+  --color-bg-subtle: #f8fafc; /* 보조 배경 */
+  --color-border: #e0e0e0; /* 테두리 */
+
+  /* 폰트 */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* 카드 스타일 */
+  --card-border-radius: 12px;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* -----------------------------------------------------------------
+ * 2. 다크 모드 변수 재정의
+ * ----------------------------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #60a5fa;
+    --color-text-base: #f8fafc;
+    --color-text-muted: #9ca3af;
+    --color-bg-base: #1e1e1e;
+    --color-bg-subtle: #1f2937;
+    --color-border: #404040;
+
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    --card-shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* -----------------------------------------------------------------
+ * 3. 통합 카드 기본 스타일 (가장 핵심적인 부분)
+ * - 기존 클래스에 공통 스타일을 한 번에 적용하여 호환성 확보
+ * ----------------------------------------------------------------- */
+.faq-item,
+.card,
+.product-card,
+.toc-container {
+  background-color: var(--color-bg-base);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 20px;
+  overflow: hidden; /* 내부 요소가 모서리를 벗어나지 않도록 */
+}
+
+.faq-item:hover,
+.card:hover,
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* -----------------------------------------------------------------
+ * 4. 개별 UI 요소 스타일
+ * - 각 요소의 고유한 디자인만 따로 정의합니다.
+ * ----------------------------------------------------------------- */
+
+/** 4.1 개선된 카드 (기본) **/
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background-color: var(--color-bg-subtle);
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-content div {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-base);
+}
+
+/** 4.2 FAQ 스타일 **/
+.faq-item {
+  padding: 18px 22px;
+  background: linear-gradient(135deg, var(--color-bg-subtle) 0%, var(--color-bg-base) 100%);
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-base);
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item .short-answer {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.faq-item[open] {
+  border-color: var(--color-primary);
+}
+
+/** 4.3 쿠팡 상품 카드 스타일 **/
+.product-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+.product-card {
+  flex: 0 0 calc(33.333% - 25px);
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-card .product-details {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card .product-name {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--color-text-base);
+  min-height: 2.5em;
+}
+
+.product-card .product-price {
+  font-size: 1.1em;
+  color: #dc3545; /* 가격은 강조를 위해 유지 */
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.product-card .product-purchase-button {
+    display: inline-block;
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 12px 15px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: auto;
+    border: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .product-card .product-price { color: #ff6b6b; }
+}
+
+
+/** 4.4 목차(TOC) 스타일 **/
+.toc-container {
+    background-color: var(--color-bg-subtle);
+    border-left: 4px solid var(--color-primary);
+    padding: 15px 20px;
+    margin: 30px 0;
+}
+
+.toc-header {
+    font-size: 1.4em;
+    color: var(--color-primary);
+    margin: 0 0 15px 0;
+}
+
+.toc-list, .toc-h3-list {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.toc-h2-item a, .toc-h3-item a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.toc-h2-item a {
+    font-weight: 800;
+    color: var(--color-text-base);
+}
+
+.toc-h2-item a:hover, .toc-h3-item a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* -----------------------------------------------------------------
+ * 5. 반응형 디자인
+ * ----------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .product-card {
+    flex-basis: calc(50% - 25px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card-container, .product-list-container {
+    gap: 16px;
+    padding: 0 12px;
+  }
+  .card, .product-card {
+    flex-basis: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+}
