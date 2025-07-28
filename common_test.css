@@ -1,13 +1,13 @@
 /* =================================================================================================
    통합 CSS (Refactored by Gemini)
    - CSS 변수를 사용한 중앙 집중식 테마 관리
+   - 시스템 다크 모드 자동 감지 및 수동 전환 지원
    - 컴포넌트 기반의 구조화된 스타일
-   - 다크 모드 로직 통합 및 중복 제거
    ================================================================================================= */
 
 /* ===== 1. 전역 스타일 및 변수 정의 (Global Styles & Variables) ===== */
 :root {
-  /* Color Palette */
+  /* --- 라이트 모드 (기본값) --- */
   --color-text-primary: #1e293b;
   --color-text-secondary: #64748b;
   --color-accent-primary: #3b82f6;
@@ -19,46 +19,44 @@
   --color-surface-3: #e9ecef;
   --color-border: #e5e7eb;
 
-  /* Typography */
+  /* Typography, Sizing, Effects 등 공통 변수 */
   --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-  /* Sizing & Spacing */
   --border-radius-medium: 8px;
   --border-radius-large: 12px;
   --spacing-regular: 16px;
   --spacing-medium: 24px;
-
-  /* Effects */
   --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.06);
   --shadow-large: 0 8px 25px rgba(59, 130, 246, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
   --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- 다크 모드 변수 --- */
-html[data-theme="dark"] {
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #9ca3af;
-  --color-accent-primary: #60a5fa;
-  --color-accent-secondary: #a78bfa;
-  --color-accent-danger: #ff6b6b;
-  --color-background-body: #111827;
-  --color-surface-1: #1f2937;
-  --color-surface-2: #1f2937; /* 그라데이션 대신 단일 색상 사용 또는 유지 */
-  --color-surface-3: #2d2d2d;
-  --color-border: #374151;
+/* --- 시스템 다크 모드 자동 감지 --- */
+/* OS/브라우저 설정이 다크 모드일 때 변수를 재정의합니다. */
+/* 수동으로 data-theme="light"를 설정하면 이 규칙이 적용되지 않습니다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #9ca3af;
+    --color-accent-primary: #60a5fa;
+    --color-accent-secondary: #a78bfa;
+    --color-accent-danger: #ff6b6b;
+    --color-background-body: #111827;
+    --color-surface-1: #1f2937;
+    --color-surface-2: #1f2937;
+    --color-surface-3: #2d2d2d;
+    --color-border: #374151;
 
-  --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
-  --shadow-large: 0 8px 25px rgba(96, 165, 250, 0.2), 0 4px 10px rgba(0, 0, 0, 0.4);
+    --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.4);
+    --shadow-large: 0 8px 25px rgba(96, 165, 250, 0.2), 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
 }
 
-/* --- 수동 .dark-mode 클래스 지원 --- */
-.dark-mode {
-  color-scheme: dark;
-}
+/* --- 수동 다크 모드 설정 --- */
+/* JS 등으로 html 태그에 data-theme="dark" 또는 .dark-mode 클래스 추가 시 적용됩니다. */
+html[data-theme="dark"],
 .dark-mode:root {
-  /* 위 html[data-theme="dark"]와 동일한 변수 세트를 여기에 복사하거나, SCSS 사용 시 @extend 활용 */
   --color-text-primary: #f8fafc;
   --color-text-secondary: #9ca3af;
   --color-accent-primary: #60a5fa;
@@ -75,11 +73,17 @@ html[data-theme="dark"] {
   --shadow-large: 0 8px 25px rgba(96, 165, 250, 0.2), 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
+
 body {
   background-color: var(--color-background-body);
   color: var(--color-text-secondary);
   font-family: var(--font-family-base);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+/* ... 이하 컴포넌트 스타일은 이전과 동일하게 유지됩니다 ... 
+   (FAQ, 일반 카드, 상품 목록, 목차, 반응형 디자인, 접근성 등)
+*/
 
 /* =================================================================================================
    2. 컴포넌트: FAQ (Component: FAQ)
@@ -115,12 +119,13 @@ body {
 }
 
 .faq-item:hover {
-  border-color: #cbd5e1; /* TODO: 변수화 고려 */
+  border-color: #cbd5e1;
   box-shadow: var(--shadow-medium);
   transform: translateY(-1px);
 }
-html[data-theme="dark"] .faq-item:hover {
-    border-color: #4b5563; /* TODO: 변수화 고려 */
+:root:not([data-theme="light"]):hover .faq-item,
+[data-theme="dark"]:hover .faq-item {
+    border-color: #4b5563;
 }
 
 .faq-item:hover::before {
@@ -170,8 +175,9 @@ html[data-theme="dark"] .faq-item:hover {
   color: var(--color-text-primary);
   margin-bottom: 12px;
 }
-html[data-theme="dark"] .faq-item[open] summary {
-    color: #bfdbfe; /* TODO: 변수화 고려 */
+:root:not([data-theme="light"]) .faq-item[open] summary,
+[data-theme="dark"] .faq-item[open] summary {
+    color: #bfdbfe;
 }
 
 .faq-item[open] summary::after {
@@ -193,6 +199,7 @@ html[data-theme="dark"] .faq-item[open] summary {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
 
 /* =================================================================================================
    3. 컴포넌트: 일반 카드 (Component: Generic Card)
